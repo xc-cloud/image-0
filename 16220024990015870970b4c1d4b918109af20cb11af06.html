@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/image/image/icon.png" type="image/svg+xml" >
+    <link rel="shortcut icon" href="//www.sangyuancheng.com/image/image/icon.png" type="image/svg+xml" >
     <title>计划</title>
     <meta name="description" content="随心笔录，分享">
-    <link rel="stylesheet" th-type="href" th:import="image/css/bootstrap.min.css,image/css/type.css">
-    <link rel="stylesheet" th:remove href="/image/css/bootstrap.min.css">
-    <link rel="stylesheet" th:remove href="/image/css/type.css">
-    <script th:remove src="/image/js/jquery.min.js"></script>
-    <script th:remove src="/image/js/angular.min.js"></script>
-    <script th:remove src="/image/js/bootstrap.min.js"></script>
-    <script th:remove src="/image/js/base.js"></script>
-    <script th:remove src="/image/js/date.js"></script>
-    <script th:remove src="/image/js/modal.js"></script>
-    <script src="/image/js/currentConfig.js"></script>
-    <script th-type="src" th:import="image/js/jquery.min.js,image/js/angular.min.js,image/js/bootstrap.min.js,image/js/base.min.js,image/js/date.min.js,image/js/modal.min.js"></script>    
+    <link rel="stylesheet"  href="//www.sangyuancheng.com/image/css/bootstrap.min.css">
+    <link rel="stylesheet"  href="//www.sangyuancheng.com/image/css/top.css">
+    <link rel="stylesheet"  href="//www.sangyuancheng.com/image/css/type.css">
+    <link rel="stylesheet"  href="//www.sangyuancheng.com/image/css/bottom.css">
+    <script  src="//www.sangyuancheng.com/image/js/jquery.min.js"></script>
+    <script th:remove src="//www.sangyuancheng.com/image/js/angular.min.js"></script>
+    <script th:remove src="//www.sangyuancheng.com/image/js/bootstrap.min.js"></script>
+    <script th:remove src="//www.sangyuancheng.com/image/js/base.js"></script>
+    <script th:remove src="//www.sangyuancheng.com/image/js/date.js"></script>
+    <script th:remove src="//www.sangyuancheng.com/image/js/modal.min.js"></script>
+    <script src="//www.sangyuancheng.com/image/js/currentConfig.js"></script>  
     <style>
-      *{
+      body,#core, #card{
         overflow: hidden;
       }
         #core{
@@ -51,22 +51,27 @@
           border-radius: 50%;
           margin: auto;
         }
-        #card{
+        #card,#cardInfo{
           position: fixed;
           z-index: 9;
           padding: 15px;
-          height: 40%;
+          height: 60%;
           width: 100%;
-          bottom: -40%;
+          bottom: -60%;
           transition: bottom .3s;
           background-image: url(http://5b0988e595225.cdn.sohucs.com/images/20200325/3fadec9974ab42578b76e5d238fb46f6.jpeg);
           background-repeat: no-repeat;
           background-size: cover;
         }
+        #bottom{
+          display: none !important;
+        }
     </style>
 </head>
 <body id="scope">
-  <div id="loadding" onclick="$('#card').css('bottom','-40%');$('.openCard').show()">
+  <div style="display: none;" ng-include="'//www.sangyuancheng.com/image/html/top.html'"></div>
+  <div style="display: none;" ng-include="'//www.sangyuancheng.com/image/html/banner.html'"></div>
+  <div id="loadding" onclick="$('#card,#cardInfo').css('bottom','-60%');$('.openCard').show()">
     <div ng-class="'load ' + loadding.class"  ng-bind="(100 -loadding.width).toFixed(2) + '%'"></div>
     <audio id="backgroundMusic" autoplay="autoplay" style="display: none;"></audio>
   </div>
@@ -89,7 +94,7 @@
     <span ng-show="body.isOpenCard" style="display: block;text-align: center;color: rgb(0, 196, 0);margin: auto;margin-top: 10%;">今天已完成打卡</span>
     <div style="margin-top: 15px;height: 120px;overflow-y: auto;background-color: rgba(255, 255, 255, 0.541);">
       <ul style="padding: 0;">
-        <li ng-repeat="obj in body.list | orderBy:'order':true" style="text-align: right;height: 30px;line-height: 30px;padding-right: 15px;">
+        <li ng-repeat="obj in body.list | orderBy:'order':true" ng-click="showMsg(obj)" style="text-align: right;height: 30px;line-height: 30px;padding-right: 15px;">
           <span>你在</span>
           <span ng-bind="formatDate(obj.time)" style="color: rgb(0, 196, 0);"></span>
           <span>完成</span>
@@ -102,9 +107,21 @@
   <div id="card">
       <div class="body">
         <h3 style="text-align: center;color: rgb(0, 196, 0);">立即打卡</h3>
+        <div style="text-align: center;color: rgb(196, 160, 0);">
+          <span>上一次打卡为</span>
+          <span ng-bind="config.this"></span>
+          <span>kg</span>
+        </div>
         <div class="input-group" style="margin-top: 15px;">
-          <span class="input-group-addon" style="color:#fff;background-color: rgb(5, 133, 33);border-color:rgb(5, 133, 33)">最新数值</span>
+          <span class="input-group-addon" style="color:#fff;background-color: rgba(5, 133, 33, 0.7);border-color:rgb(5, 133, 33)">最新的数值</span>
           <input type="number" ng-model="config.newThis" style="background-color:rgb(235, 253, 255);border-color:rgb(5, 133, 33)" class="form-control">
+        </div>
+        <div class="input-group" style="margin-top: 15px;display: flex;">
+          <span class="input-group-addon" style="display: block;color:#fff;background-color: rgba(5, 133, 33, 0.7);border-color:rgb(5, 133, 33);width: 30%;">相对于之前</span>
+          <span class="input-group-addon" style="display: block;width: 70%;color:{{config.msgColor}};background-color: rgba(255,255,255,0.33);border-color:rgb(5, 133, 33)" ng-bind="getMsg()"></span>
+        </div>
+        <div style="margin-top: 15px;">
+          <textarea  ng-model="config.comment" style="background-color:rgb(235, 253, 255);border-color:rgb(5, 133, 33);resize: none;width: 100%;display: block;height: 150px;overflow-y: auto;" class="form-control" placeholder="记录下运动过程"></textarea>
         </div>
         <div style="text-align: center;margin-top: 15px;">
           <span class="btn btn-sm btn-warning" ng-click="sendCard()">打卡</span>
@@ -112,6 +129,34 @@
         <div style="color: rgb(185, 57, 57);text-align: center;margin-top: 15px;">每天只能打卡一次哦！</div>
       </div>
   </div>
+  <div id="cardInfo">
+    <div class="body">
+      <h3 style="text-align: center;color: rgb(0, 196, 0);">
+      <span>打卡记录</span>
+      </h3>
+      <table class="table table-success table-bordered table-hover table-bg">
+          <tbody>
+            <tr>
+              <td style="border-color: #fff;text-align: right;"><span>打卡时间：</span></td>
+              <td style="border-color: #fff;"><span ng-bind="formatDate(thisConfig.time)" style="color: rgb(14, 99, 179);"></span></td>
+            </tr>
+            <tr>
+              <td style="border-color: #fff;text-align: right;"><span>打卡数值：</span></td>
+              <td style="border-color: #fff;color:rgb(210, 33, 216);"><span ng-bind="thisConfig.num"></span>
+                <span>kg</span></td>
+            </tr>
+            <tr>
+              <td style="border-color: #fff;text-align: right;"><span>相对于之前：</span></td>
+              <td style="border-color: #fff;"><span style="color:{{thisConfig.msgColor}}" ng-bind="getMsgInfo(thisConfig.OldNum,thisConfig.num)"></span></td>
+            </tr>
+          </tbody>
+      </table>
+      <div style="padding: 5px;background-color:rgba(255, 255, 255, 0.356);">
+        <div ng-bind="thisConfig.comment" style="width: 100%;min-height: 100px;max-height: 150px;overflow-y: auto;"></div>
+      </div>
+    </div>
+</div>
+  <div ng-include="'//www.sangyuancheng.com/image/html/bottom.html'"></div>
 </body>
 <script>
 var id = "plan"
@@ -121,7 +166,8 @@ module.config(function($sceProvider) {$sceProvider.enabled(false)})
 module.controller(id,function($scope,$sce){
     var current = new currentConfig()
     $scope.classNames = ["progress-bar-success","progress-bar-info","progress-bar-warning","progress-bar-danger"]
-    $scope.config = {start:60.6,end:45,this:60.6,newThis:60.6}
+    $scope.config = {start:60.6,end:45,this:60.6,newThis:60.6,comment:"",type:0,msgColor:"rgb(255,141,0)"}
+    $scope.thisConfig = {}
     //已完成百分比
     // 已完成 / 总数
     var w = (1 - (($scope.config.start - $scope.config.this) / ($scope.config.start - $scope.config.end)))*100
@@ -133,20 +179,62 @@ module.controller(id,function($scope,$sce){
       width:w,
       class:$scope.classNames[w > 80 ? 3 : w > 50 ? 2 : w > 30 ? 1 : 0]
     }
+    $scope.showMsg = function(obj){
+      console.log(obj)
+      $scope.thisConfig = obj
+      $('#cardInfo').css('bottom','0%');
+    }
+    $scope.getMsg = function(){
+      var sum = ($scope.config.this - $scope.config.newThis).toFixed(1)
+      if (sum > 0) {
+        //减少了
+        $scope.config.msgColor = "rgb(5, 133, 33)"
+        return "减少了"+sum+"kg"
+      } else if(sum < 0){
+        //增加了
+        $scope.config.msgColor = "red"
+        return "增加了"+(sum*-1)+"kg"
+      } else {
+        //没有变化
+        $scope.config.msgColor = "rgb(255,141,0)"
+        return "没有变化"
+      }
+    }
+    $scope.getMsgInfo = function(oldNum,num){
+      if (num == null || oldNum == null){
+        return ""
+      }
+      var sum = (oldNum - num).toFixed(1)
+      if (sum > 0) {
+        //减少了
+        $scope.thisConfig.msgColor = "rgb(5, 133, 33)"
+        return "减少了"+sum+"kg"
+      } else if(sum < 0){
+        //增加了
+        $scope.thisConfig.msgColor = "red"
+        return "增加了"+(sum*-1)+"kg"
+      } else {
+        //没有变化
+        $scope.thisConfig.msgColor = "rgb(255,141,0)"
+        return "没有变化"
+      }
+    }
     $scope.sendCard = function(){
       //拉取打卡记录，根据添加顺序进行降序，所以最后一条，为最新的打卡信息
       current.addOrUpdateConfig({
         "name":"plan_card_list",
         "value":JSON.stringify({
           "cardTime":new Date().getTime(),
-          "this" : $scope.config.newThis
+          "this" : $scope.config.newThis,
+          "comment":$scope.config.comment,
+          "oldThis":$scope.config.this
         }),
         "order":$scope.body.list.length || 0,
         "type" : 700
       },function(e){
         if(e.code == 200) {
           modal.createModal(true,"打卡成功！")
-          $('#card').css('bottom','-40%');
+          $('#card').css('bottom','-60%');
           $scope.init()
         } else {
           modal.createModal(false,"打卡失败！")
@@ -154,7 +242,7 @@ module.controller(id,function($scope,$sce){
       })
     }
     $scope.formatDate = function(time){
-      return getDateObject().yyyyMMddFormat
+      return getDateObject(time).yyyyMMddHHmmssFormat
     }
     $scope.init = function (){
       //拉取打卡记录，根据添加顺序进行降序，所以最后一条，为最新的打卡信息
@@ -168,12 +256,14 @@ module.controller(id,function($scope,$sce){
             $scope.body.list.push({
               time:obj.cardTime,
               num:obj.this,
+              OldNum:obj.oldThis,
+              comment:obj.comment,
               order:e.data[temp]["order"]
             })
           }
           if ($scope.body.list.length > 0){
             var item = $scope.body.list[$scope.body.list.length - 1]
-            // $scope.body.isOpenCard = getDateObject(item.time).yyyyMMddFormat == getDateObject().yyyyMMddFormat
+            $scope.body.isOpenCard = getDateObject(item.time).yyyyMMddFormat == getDateObject().yyyyMMddFormat
             $scope.config.this = item.num
             $scope.config["newThis"] = $scope.config["this"]
             var w = (1 - (($scope.config.start - $scope.config.this) / ($scope.config.start - $scope.config.end)))*100
