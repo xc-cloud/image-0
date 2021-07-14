@@ -1,22 +1,22 @@
-CTYPE html>
+<!DOCTYPE html>
 <html lang="cn" id="html" ng-app="plan" ng-controller="plan" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="//www.sangyuancheng.com/image/image/icon.png" type="image/svg+xml" >
+    <link rel="shortcut icon" href="/image/image/icon.png" type="image/svg+xml" >
     <title>计划</title>
     <meta name="description" content="随心笔录，分享">
-    <link rel="stylesheet"  href="//www.sangyuancheng.com/image/css/bootstrap.min.css">
-    <link rel="stylesheet"  href="//www.sangyuancheng.com/image/css/top.css">
-    <link rel="stylesheet"  href="//www.sangyuancheng.com/image/css/type.css">
-    <link rel="stylesheet"  href="//www.sangyuancheng.com/image/css/bottom.css">
-    <script  src="//www.sangyuancheng.com/image/js/jquery.min.js"></script>
-    <script th:remove src="//www.sangyuancheng.com/image/js/angular.min.js"></script>
-    <script th:remove src="//www.sangyuancheng.com/image/js/bootstrap.min.js"></script>
-    <script th:remove src="//www.sangyuancheng.com/image/js/base.js"></script>
-    <script th:remove src="//www.sangyuancheng.com/image/js/date.js"></script>
-    <script th:remove src="//www.sangyuancheng.com/image/js/modal.min.js"></script>
-    <script src="//www.sangyuancheng.com/image/js/currentConfig.js"></script>  
+    <link rel="stylesheet"  href="/image/css/bootstrap.min.css">
+    <link rel="stylesheet"  href="/image/css/top.css">
+    <link rel="stylesheet"  href="/image/css/type.css">
+    <link rel="stylesheet"  href="/image/css/bottom.css">
+    <script  src="/image/js/jquery.min.js"></script>
+    <script th:remove src="/image/js/angular.min.js"></script>
+    <script th:remove src="/image/js/bootstrap.min.js"></script>
+    <script th:remove src="/image/js/base.js"></script>
+    <script th:remove src="/image/js/date.js"></script>
+    <script th:remove src="/image/js/modal.min.js"></script>
+    <script src="/image/js/currentConfig.js"></script>  
     <style>
       body,#core, #card{
         overflow: hidden;
@@ -69,7 +69,7 @@ CTYPE html>
     </style>
 </head>
 <body id="scope">
-  <div style="display: none;" ng-include="'//www.sangyuancheng.com/image/html/top.html'"></div>
+  <div style="display: none;" ng-include="'/image/html/top.html'"></div>
   <div id="loadding" onclick="$('#card,#cardInfo').css('bottom','-60%');$('.openCard').show()">
     <div ng-class="'load ' + loadding.class"  ng-bind="(100 -loadding.width).toFixed(2) + '%'"></div>
     <audio id="backgroundMusic" autoplay="autoplay" style="display: none;"></audio>
@@ -155,18 +155,7 @@ CTYPE html>
       </div>
     </div>
 </div>
-  <div>
-    <link rel="stylesheet" href="//www.sangyuancheng.com/image/css/bottom.css">  
-<div id="bottom-clear">
-</div>
-<link rel="stylesheet" href="//www.sangyuancheng.com/image/css/bottom-login.css">  
-<div ng-include="'//www.sangyuancheng.com/login/template/login.html'" id="bottom-login" style="display: none;"  ng-click="hideLogin($event)"></div>
-<div ng-include="'//www.sangyuancheng.com/register/template/qrcode.html'" id="bottom-register" style="display: none;"  ng-click="hideRegister($event)"></div>
-<script src="//www.sangyuancheng.com/login/js/js.js"></script>
-<script src="//www.sangyuancheng.com/image/js/crypto-js.min.js"></script>
-<script src="//www.sangyuancheng.com/image/js/jsencrypt.min.js"></script>
-<script src="//www.sangyuancheng.com/image/js/bottom.min.js"></script>
-  </div>
+  <div ng-include="'/image/html/bottom.html'"></div>
 </body>
 <script>
 var id = "plan"
@@ -294,4 +283,3 @@ module.controller(id,function($scope,$sce){
 $("#loadding ").css("padding-top",($(window).height() * .7)/2 +"px")
 </script>
 </html>
-
