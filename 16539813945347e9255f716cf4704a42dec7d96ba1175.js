@@ -19,8 +19,8 @@ aboutExpandNotePad.prototype = {
         }
         let that = this
         $.get(`/markdown/aboutExpand/get?pageNumber=${opt.pageNumber}&pageSize=${opt.pageSize}`, function(data) {
-            data = e.data
-            if (data.result.length > 0) {
+            data = data.data
+            if (data.result.length > 0 || opt.pageNumber == 1) {
                 setTimeout(function() {
                     callback(data.result)
                 }, 100)
