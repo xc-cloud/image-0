@@ -1,7 +1,7 @@
 /**
  * 此模块需要privatespace权限，如果没有，那么无法使用本模块
  */
-function aboutExpandNotePad() {
+ function aboutExpandNotePad() {
 
 }
 aboutExpandNotePad.prototype = {
@@ -19,6 +19,7 @@ aboutExpandNotePad.prototype = {
         }
         let that = this
         $.get(`/markdown/aboutExpand/get?pageNumber=${opt.pageNumber}&pageSize=${opt.pageSize}`, function(data) {
+            data = e.data
             if (data.result.length > 0) {
                 setTimeout(function() {
                     callback(data.result)
