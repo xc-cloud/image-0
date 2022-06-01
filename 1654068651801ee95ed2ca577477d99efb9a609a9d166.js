@@ -36,10 +36,17 @@ aboutExpandNotePad.prototype = {
      * @param {*} body 
      * @param {*} id 
      */
-    addOrUpdate(body, id, callback) {
+    addOrUpdate(title, body, id, callback) {
         let bf = id == null ? "新增" : "修改"
+        if (body == null || body.length == 0) {
+            return 
+        }
+        if (title == null || title.length == 0) {
+            title = body.substring(0,15)
+        }
         $.post("/markdown/aboutExpand/addOrUpdate", {
             body:body,
+            title:title,
             id:id,
             open:1
         }, function(e) {
