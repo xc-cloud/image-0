@@ -20,14 +20,30 @@ aboutExpandNotePad.prototype = {
         let that = this
         $.get(`/markdown/aboutExpand/get?pageNumber=${opt.pageNumber}&pageSize=${opt.pageSize}`, function(data) {
             data = data.data
-            if (data.result.length > 0 || opt.pageNumber == 1) {
+            if (data.result.length > 0 && (opt.pageNumber == 1 || opt.append) ) {
                 setTimeout(function() {
                     callback(data.result)
                 }, 100)
             }
-            if (data.result.length == opt.pageSize) {
+            if (data.result.length == opt.pageSize && opt.append) {
                 opt.pageNumber += 1
                 that.get(opt, callback)
+            }
+        })
+    },
+	/**
+     * 获取指定数据
+     * @param {Number} id  笔记id
+     * @param {*} callback 回调函数，如果append为true，那么该回调将会被调用多次
+     */
+    getBody(id, callback) {
+        let that = this
+        $.get(`/markdown/aboutExpand/get/${id}`, function(data) {
+            data = data.data
+            if (data.body.length > 0) {
+                setTimeout(function() {
+                    callback(data)
+                }, 100)
             }
         })
     },
