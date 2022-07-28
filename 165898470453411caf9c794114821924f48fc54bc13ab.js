@@ -27,7 +27,7 @@ aboutExpandNotePad.prototype = {
             }
             if (data.result.length == opt.pageSize && opt.append) {
                 opt.pageNumber += 1
-                that.get(opt, callback)
+                that.get({page:opt.pageNumber,size:opt.pageSize,append:opt.append}, callback)
             }
         })
     },
