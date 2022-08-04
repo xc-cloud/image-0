@@ -8,27 +8,17 @@ aboutExpandNotePad.prototype = {
     //获取列表数据
     /**
      * 获取指定数据
-     * @param {JSON} option  {pageNumber = 1, pageSize = 30, append = false}起始页,每页数量,如果存在多页，是否连续拉取
-     * @param {*} callback 回调函数，如果append为true，那么该回调将会被调用多次
+     * @param {JSON} option  {pageNumber = 1, pageSize = 30}起始页,每页数量
      */
-    get(option, callback) {
+    get(option, callback, oldData) {
         let opt = {
             pageNumber : option.page || 1,
-            pageSize : option.size || 30,
-            append : option.append || false
+            pageSize : option.size || 30
         }
         let that = this
         $.get(`/markdown/aboutExpand/get?pageNumber=${opt.pageNumber}&pageSize=${opt.pageSize}`, function(data) {
             data = data.data
-            if (data.result.length > 0 && (opt.pageNumber == 1 || opt.append) ) {
-                setTimeout(function() {
-                    callback(data.result)
-                }, 100)
-            }
-            if (data.result.length == opt.pageSize && opt.append) {
-                opt.pageNumber += 1
-                that.get({page:opt.pageNumber,size:opt.pageSize,append:opt.append}, callback)
-            }
+            callback(data.result, data)
         })
     },
 	/**
