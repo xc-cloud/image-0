@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>随心笔录 - 暂停服务</title>
     <meta name="description" content="随心笔录，分享">
-    <style>
+    <style id = "style_context">
         body {
             background-color: #ffffff;
             font-family: 'smallFont', sans-serif;
@@ -197,6 +197,12 @@
 </div>
 </body>
 <script>
+    if ($(window).height() > $(window).width()) {
+        $("#style_context").remove()
+        $("#wordsearch").remove()
+        return 
+    }
+    
       $(function () {
     var liWidth = $("li").css("width");
     $("li").css("height", liWidth);
