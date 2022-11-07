@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>随心笔录 - 暂停服务</title>
     <meta name="description" content="随心笔录，分享">
-    <style>
+    <style id="style_context">
         body {
             background-color: #ffffff;
             font-family: 'smallFont', sans-serif;
@@ -187,16 +187,22 @@
         <div id="main-content">
           <h1 style="white-space: nowrap;">我们找不到您想要的东西。</h1>
           <p style="white-space: nowrap;">可能是暂时不可用，已移动或不再存在。</p>
-          <p style="white-space: nowrap;">因云服务器价格上涨，我们于2022年11月09日停止运营维护。 </p>
+          <p style="white-space: nowrap;">因<strong>腾讯云</strong>服务器价格上涨，我们于<strong style="color:red">2022年11月09日</strong>停止运营维护。 </p>
           <p style="white-space: nowrap;">对此给您带来的不便，敬请谅解！</p>
           <div id="navigation">
-            没有任何导航，网站已不可用。
+            本页面由GitHub托管停靠:)
           </div>
         </div>
       </div>
 </div>
 </body>
 <script>
+    if ($(window).height() > $(window).width()) {
+        $("#style_context").remove()
+        $("#wordsearch").remove()
+        return 
+    }
+    
       $(function () {
     var liWidth = $("li").css("width");
     $("li").css("height", liWidth);
